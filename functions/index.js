@@ -9,6 +9,7 @@ admin.initializeApp();
 // https://firebase.google.com/docs/functions/write-firebase-functions
 
 exports.helloWorld = functions
+    .region('asia-northeast1')
     .https
     .onRequest((request, response) => {
         //  response.send("Hello from Firebase!");
@@ -19,10 +20,11 @@ exports.helloWorld = functions
                 console.log(error);
             }
         };
-
         getData().then(html => {
             const $ = cheerio.load(html.data);
-            const rank = $('#content > div > div.home_feature > div.feature_side > div > ol').text();
+            const rank = $(
+                '#content > div > div.home_feature > div.feature_side > div > ol'
+            ).text();
             console.log('result : ', rank);
         })
     });
