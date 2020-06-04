@@ -11,20 +11,27 @@ admin.initializeApp();
 exports.helloWorld = functions
     .region('asia-northeast1')
     .https
-    .onRequest((request, response) => {
-        //  response.send("Hello from Firebase!");
-        const getData = async () => {
-            try {
-                return await axios.get('https://sports.news.naver.com/kbaseball/index.nhn');
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        getData().then(html => {
-            const $ = cheerio.load(html.data);
-            const rank = $(
-                '#content > div > div.home_feature > div.feature_side > div > ol'
-            ).text();
-            console.log('result : ', rank);
-        })
+    .onRequest(async(request, response) => {
+        const arr = ['http://ncov.mohw.go.kr', 'https://m.stock.naver.com', 'https://m.stock.naver.com/marketindex/index.nhn?menu=exchange#exchange'];
+        const result = new Array();
+        for (let i = 0; i < arr.length; i++) {
+            await axios.get(arr[i]).then(html=>{
+                const $ = cheerio.load(html.data);
+                switch (i) {
+                    case 0:
+                        result.push($('body > div > div.mainlive_container > div.container > div > div.liveboard_layout > div.liveNumOuter > ul > li:nth-child(1) > span.data1').text());
+                        break;
+                    case 1:
+                        result.push($('#mflick > div > div.flick-ct.dmst._tab._index_wrapper._polling > div > ul').text().replace(/^\s+|\t/g,''));
+                        break;
+                    case 2:
+                        result.push($('#content > div > div.ct_box.intnl_major_item > ul > li:nth-child(1) > a > div.price_wrp').text().replace(/\t/g,''));
+                        break;
+                    default:
+                        console.log('index error');
+                        break;
+                }
+            })
+            console.log(result);
+        }
     });
