@@ -3,9 +3,9 @@
 # Prerequisites
     Node.JS V10.16.3
     
-    Firebase-admin V8.6.0
+    Firebase-admin V8.10.0
     
-    Firebase-functions V3.3.0
+    Firebase-functions V3.6.1
 # Open-source libraries
 https://github.com/axios/axios
 
