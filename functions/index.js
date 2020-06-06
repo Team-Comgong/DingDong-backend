@@ -13,7 +13,11 @@ exports.helloWorld = functions
     .https
     .onRequest(async (request, response) => {
         const arr = [
-            'http://ncov.mohw.go.kr', 'https://m.stock.naver.com', 'https://m.stock.naver.com/marketindex/item.nhn?marketindexCd=FX_USDKRW&menu=ex' +
+            'http://ncov.mohw.go.kr', 'https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EC%' +
+                    '95%88%EC%96%918%EB%8F%99+%EB%82%A0%EC%94%A8&oquery=%EB%82%A0%EC%94%A8&tqi=UWWx' +
+                    'YdprvOsssOukGWCssssss4d-249462',
+            'https://m.stock.naver.com',
+            'https://m.stock.naver.com/marketindex/item.nhn?marketindexCd=FX_USDKRW&menu=ex' +
                     'change'
         ];
         const result = new Array();
@@ -30,11 +34,18 @@ exports.helloWorld = functions
                             ).text());
                             break;
                         case 1:
+                            result.push('오늘의 안양 날씨 : ' + $(
+                                '#main_pack > div.sc.cs_weather._weather > div:nth-child(2) > div.weather_box >' +
+                                ' div.weather_area._mainArea > div.today_area._mainTabContent > div.main_info >' +
+                                ' div'
+                            ).text());
+                            break;
+                        case 2:
                             result.push(
                                 $('#mflick > div > div.flick-ct.dmst._tab._index_wrapper._polling > div > ul').text().replace(/^\s+|\t/g, '')
                             );
                             break;
-                        case 2:
+                        case 3:
                             result.push('오늘의 달러 환율 : ' + $(
                                 '#header > div.major_info_wrp.no_chart.no_code > div.major_info > div.stock_wrp' +
                                 ' > div'
@@ -47,6 +58,8 @@ exports.helloWorld = functions
                 })
 
         }
+        console.log(result);
+
         const today = new Date();
         const year = today.getFullYear();
         const month = today.getMonth() + 1;
@@ -57,4 +70,5 @@ exports.helloWorld = functions
             .database()
             .ref(name)
             .set({result});
+        return null;
     });
