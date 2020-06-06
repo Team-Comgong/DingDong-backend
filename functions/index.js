@@ -57,4 +57,6 @@ exports.helloWorld = functions
             .database()
             .ref(name)
             .set({result});
+
+        return null;
     });
