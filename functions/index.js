@@ -46,10 +46,20 @@ exports.helloWorld = functions
                             ).text());
                             break;
                         case 2:
-                            result.push(
-                                '코스피 : ' + $('#boxDashboard > ul > li:nth-child(1) > a > span').text() +
-                                '코스닥 : ' + $('#boxDashboard > ul > li.up > a > span').text()
-                            );
+                            result.push('코스피 : ' + $(
+                                '#mflick > div > div.flick-ct.dmst._tab._index_wrapper._polling > div > ul > li' +
+                                '._kospi > a > div.txt_area._index_stage > span'
+                            ).text() + ' ' + $(
+                                '#mflick > div > div.flick-ct.dmst._tab._index_wrapper._polling > div > ul > li' +
+                                '._kospi > a > div.txt_area._index_stage > div'
+                            ).text().replace(/\s/g,''));
+                            result.push('코스닥 : ' + $(
+                                '#mflick > div > div.flick-ct.dmst._tab._index_wrapper._polling > div > ul > li' +
+                                '._kosdaq > a > div.txt_area._index_stage > span'
+                            ).text() + ' ' + $(
+                                '#mflick > div > div.flick-ct.dmst._tab._index_wrapper._polling > div > ul > li' +
+                                '._kosdaq > a > div.txt_area._index_stage > div'
+                            ).text().replace(/\s/g,''))
                             break;
                         case 3:
                             result.push('오늘의 달러 환율 : ' + $(
