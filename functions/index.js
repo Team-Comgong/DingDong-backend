@@ -16,9 +16,10 @@ exports.helloWorld = functions
             'http://ncov.mohw.go.kr', 'https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EC%' +
                     '95%88%EC%96%918%EB%8F%99+%EB%82%A0%EC%94%A8&oquery=%EB%82%A0%EC%94%A8&tqi=UWWx' +
                     'YdprvOsssOukGWCssssss4d-249462',
-            'https://m.stock.naver.com',
-            'https://m.stock.naver.com/marketindex/item.nhn?marketindexCd=FX_USDKRW&menu=ex' +
-                    'change'
+            'https://m.stock.naver.com/',
+            'https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EB%' +
+                    '8B%AC%EB%9F%AC&oquery=%EB%AF%B8%EA%B5%AD+%EB%8B%AC%EB%9F%AC&tqi=UW3bswprvh8ssS' +
+                    'p3kdCsssssse4-282187'
         ];
         const result = new Array();
         for (let i = 0; i < arr.length; i++) {
@@ -37,19 +38,24 @@ exports.helloWorld = functions
                             result.push('오늘의 안양 날씨 : ' + $(
                                 '#main_pack > div.sc.cs_weather._weather > div:nth-child(2) > div.weather_box >' +
                                 ' div.weather_area._mainArea > div.today_area._mainTabContent > div.main_info >' +
-                                ' div'
+                                ' div > p'
+                            ).text() + ' ' + $(
+                                '#main_pack > div.sc.cs_weather._weather > div:nth-child(2) > div.weather_box >' +
+                                ' div.weather_area._mainArea > div.today_area._mainTabContent > div.main_info >' +
+                                ' div > ul > li:nth-child(1) > p'
                             ).text());
                             break;
                         case 2:
                             result.push(
-                                $('#mflick > div > div.flick-ct.dmst._tab._index_wrapper._polling > div > ul').text().replace(/^\s+|\t/g, '')
+                                '코스피 : ' + $('#boxDashboard > ul > li:nth-child(1) > a > span').text() +
+                                '코스닥 : ' + $('#boxDashboard > ul > li.up > a > span').text()
                             );
                             break;
                         case 3:
                             result.push('오늘의 달러 환율 : ' + $(
-                                '#header > div.major_info_wrp.no_chart.no_code > div.major_info > div.stock_wrp' +
-                                ' > div'
-                            ).text().replace(/^\s+|\t/g, ''));
+                                '#_cs_foreigninfo > div > div.contents03_sub > div > div.c_rate > div > div.rat' +
+                                'e_spot._rate_spot > div.rate_tlt > h3 > a > span.spt_con.dw'
+                            ).text());
                             break;
                         default:
                             console.log('index error');
@@ -66,6 +72,7 @@ exports.helloWorld = functions
         const date = today.getDate();
         const name = year + '-' + month + '-' + date
         console.log('Today is : ', name);
+
         admin
             .database()
             .ref(name)
