@@ -8,7 +8,7 @@
     Firebase-functions V3.6.1
     
     Heroku Scheduler
-# Open-source libraries & Add-On
+# Open-source libraries
 https://github.com/axios/axios
 
     HTTP 통신 라이브러리
