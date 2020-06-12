@@ -79,7 +79,7 @@ exports.helloWorld = functions
         const year = today.getFullYear();
         const month = today.getMonth() + 1;
         const date = today.getDate();
-        const name = year + '-' + month + '-' + date
+        const name = year + '-' + month + '-' + date;
         console.log('Today is : ', name);
 
         admin
@@ -87,4 +87,59 @@ exports.helloWorld = functions
             .ref(name)
             .set({result});
         return null;
+    });
+
+exports.sendFCM = functions
+    .region('asia-northeast1')
+    .https
+    .onRequest(async () => {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = today.getMonth() + 1;
+        const date = today.getDate() - 1;
+        
+        const title = year + '-' + month + '-' + date;
+        const context = await admin
+            .database()
+            .ref(title)
+            .child('/result')
+            .once('value')
+            .then(snapshot => {
+                return snapshot.val();
+            });
+        console.log(context);
+
+        admin
+            .database()
+            .ref('Device_ID')
+            .once('value')
+            .then(snapshot => {
+                snapshot.forEach((item) => {
+                    console.log(item.val());
+
+                    const body = {
+                        "to": item.val(),
+                        "notification": {
+                            "body": context,
+                            "title": title
+                        }
+                    };
+                    const head = {
+                        headers: {
+                            'Authorization': '',
+                            'Content-Type': 'application/json'
+                        }
+                    };
+
+                    axios
+                        .post('https://fcm.googleapis.com/fcm/send', body, head)
+                        .then(res => {
+                            console.log('Success!:', res);
+                        })
+                        .catch(e => {
+                            console.log('fail...:', e);
+                        });
+                });
+            });
+
     });
