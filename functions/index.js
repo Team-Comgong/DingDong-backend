@@ -17,9 +17,8 @@ exports.helloWorld = functions
                     '95%88%EC%96%918%EB%8F%99+%EB%82%A0%EC%94%A8&oquery=%EB%82%A0%EC%94%A8&tqi=UWWx' +
                     'YdprvOsssOukGWCssssss4d-249462',
             'https://m.stock.naver.com/',
-            'https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EB%' +
-                    '8B%AC%EB%9F%AC&oquery=%EB%AF%B8%EA%B5%AD+%EB%8B%AC%EB%9F%AC&tqi=UW3bswprvh8ssS' +
-                    'p3kdCsssssse4-282187'
+            'https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq' +
+                    '=&o=&q=%EB%8B%AC%EB%9F%AC'
         ];
         const result = new Array();
         for (let i = 0; i < arr.length; i++) {
@@ -52,19 +51,19 @@ exports.helloWorld = functions
                             ).text() + ' ' + $(
                                 '#mflick > div > div.flick-ct.dmst._tab._index_wrapper._polling > div > ul > li' +
                                 '._kospi > a > div.txt_area._index_stage > div'
-                            ).text().replace(/\s/g,''));
+                            ).text().replace(/\s/g, ''));
                             result.push('코스닥 : ' + $(
                                 '#mflick > div > div.flick-ct.dmst._tab._index_wrapper._polling > div > ul > li' +
                                 '._kosdaq > a > div.txt_area._index_stage > span'
                             ).text() + ' ' + $(
                                 '#mflick > div > div.flick-ct.dmst._tab._index_wrapper._polling > div > ul > li' +
                                 '._kosdaq > a > div.txt_area._index_stage > div'
-                            ).text().replace(/\s/g,''))
+                            ).text().replace(/\s/g, ''))
                             break;
                         case 3:
                             result.push('오늘의 달러 환율 : ' + $(
-                                '#_cs_foreigninfo > div > div.contents03_sub > div > div.c_rate > div > div.rat' +
-                                'e_spot._rate_spot > div.rate_tlt > h3 > a > span.spt_con.dw'
+                                '#exchangeColl > div.coll_cont > div > div.wrap_info > div.info_price > div.inn' +
+                                'er_info_price > div'
                             ).text());
                             break;
                         default:
