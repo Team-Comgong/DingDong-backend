@@ -97,7 +97,7 @@ exports.sendFCM = functions
         const year = today.getFullYear();
         const month = today.getMonth() + 1;
         const date = today.getDate() - 1;
-        
+
         const title = year + '-' + month + '-' + date;
         const context = await admin
             .database()
@@ -107,7 +107,6 @@ exports.sendFCM = functions
             .then(snapshot => {
                 return snapshot.val();
             });
-        console.log(context);
 
         admin
             .database()
@@ -115,12 +114,10 @@ exports.sendFCM = functions
             .once('value')
             .then(snapshot => {
                 snapshot.forEach((item) => {
-                    console.log(item.val());
-
                     const body = {
                         "to": item.val(),
                         "notification": {
-                            "body": context,
+                            "body": context.join('\n\n'),
                             "title": title
                         }
                     };
@@ -141,5 +138,5 @@ exports.sendFCM = functions
                         });
                 });
             });
-
+        return null;
     });
