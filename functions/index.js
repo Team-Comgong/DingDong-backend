@@ -123,7 +123,7 @@ exports.sendFCM = functions
                     };
                     const head = {
                         headers: {
-                            'Authorization': '',
+                            'Authorization': 'key=',
                             'Content-Type': 'application/json'
                         }
                     };
