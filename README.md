@@ -3,9 +3,7 @@
 # Prerequisites
     Node.JS V10.16.3
     
-    Firebase-admin V8.10.0
-    
-    Firebase-functions V3.6.1
+    Firebase V8.4.1
     
     Heroku Scheduler
 # Open-source libraries
